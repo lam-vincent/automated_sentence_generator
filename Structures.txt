@@ -3,8 +3,8 @@ typedef struct s_node
 	char letter;
 	struct s_node** next ; //array of pointer
 	int current_size = 0; //current size of the array
-		(char** flechies ; //array of other forms
-		char** code ; //array of the corresponding codes, "+" split character for each string)
+		//(char** flechies ; //array of other forms
+		//char** code ; //array of the corresponding codes, "+" split character for each string)
 	FF* flechies;
 }NODE;
 

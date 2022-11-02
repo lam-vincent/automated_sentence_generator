@@ -2,13 +2,13 @@
 #define UNTITLED_TREE_H
 
 #include "node.h"
+#include "file_management.h"
 
-#define MAX_SIZE 26
 
 typedef struct s_tree
 {
-    p_node root;
-} t_tree, *p_tree;
+	NODE* root;
+}TREE;
 
 // nos prototypes
 
