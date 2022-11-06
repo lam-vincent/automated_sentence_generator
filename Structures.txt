@@ -21,7 +21,9 @@ typedef struct s_tree
 }TREE;
 
 //arrays for each type
-TREE* nom = NULL;
 TREE*	verb = NULL;
+TREE* nom = NULL;
 TREE*	adv = NULL;
 TREE* adj = NULL;
+
+Verb Nom Adj Adv //DANS CET ORDRE r m j v

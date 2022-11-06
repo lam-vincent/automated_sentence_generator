@@ -12,4 +12,8 @@ typedef struct s_tree
 
 // nos prototypes
 
+TREE** create_array_tree();
+TREE*** create_dico_trees();
+
+void create_tree_from_dico(TREE*** dico_tree, char**sep_line);
 #endif
