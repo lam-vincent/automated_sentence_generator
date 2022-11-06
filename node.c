@@ -76,6 +76,7 @@ void create_word_node(NODE* node, char** sep_line, int cpt)
     if (base[cpt+1] == '\0')
         {
             add_flechies(node,sep_line);
+            node->is_end = true;
             return;
         }
     int i = 0;
