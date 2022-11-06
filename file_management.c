@@ -27,6 +27,7 @@ char **line_separator(char *line)
     return separated_line;
 }
 
+// separates codes by ":"
 char **code_separator_collin(char *full_code, int *i)
 {
     char **separated_code = (char **)malloc(sizeof(char *));
@@ -41,7 +42,7 @@ char **code_separator_collin(char *full_code, int *i)
 
     return separated_code;
 }
-// separate codes into different strings
+// separate codes by "+"
 char **code_separator_plus(char *full_code, int *i)
 {
     char **separated_code = (char **)malloc(sizeof(char *));
@@ -61,4 +62,14 @@ char **code_separator_plus(char *full_code, int *i)
 bool is_flechie(char **sep_line)
 {
     return !(!strcmp(sep_line[0], sep_line[1]) && !strcmp(sep_line[1], sep_line[0]));
+}
+
+// From a line returns the type of a word(verb,adj,adv,noun)
+char *get_type(char **sep_line)
+{
+    int cpt = strlen(sep_line[2]) + 1;
+    char *tmp = (char *)malloc(cpt * sizeof(char));
+    strcpy(tmp, sep_line[2]);
+    code_separator_collin(tmp, &cpt);
+    return tmp;
 }

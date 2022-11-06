@@ -4,12 +4,16 @@
 #include "node.h"
 #include "file_management.h"
 
+
 typedef struct s_tree
 {
-	NODE *root;
-} TREE;
+	NODE* root;
+}TREE;
 
 // nos prototypes
-void display_tree(TREE tree);
 
+TREE** create_array_tree();
+TREE*** create_dico_trees();
+
+void create_tree_from_dico(TREE*** dico_tree, char**sep_line);
 #endif
