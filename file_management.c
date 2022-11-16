@@ -64,12 +64,39 @@ bool is_flechie(char** sep_line)
     return  !(!strcmp(sep_line[0], sep_line[1]) && !strcmp(sep_line[1], sep_line[0]));
 }
 
+int transfer_type(char* type)
+{
+    int type_tree;
+    if(strcmp(type,"Ver")==0)
+            type_tree = 0;
+        else if(strcmp(type,"Nom")==0)
+            type_tree = 1;
+        else if(strcmp(type, "Adj")==0)
+            type_tree = 2;
+        else if(strcmp(type, "Adv")==0)
+            type_tree = 3;
+        else
+            type_tree = -1;
+    return type_tree;
+    }
+
 //From a line returns the type of a word(verb,adj,adv,noun)
-char* get_type(char** sep_line)
+int get_type(char** sep_line)
 {
     int cpt = strlen(sep_line[2])+1;
     char* tmp = (char*)malloc(cpt* sizeof(char));
     strcpy(tmp, sep_line[2]);
     code_separator_collin(tmp, &cpt);
-    return tmp;
+    int type_tree;
+    if(strcmp(tmp,"Ver")==0)
+        type_tree = 0;
+    else if(strcmp(tmp,"Nom")==0)
+        type_tree = 1;
+    else if(strcmp(tmp, "Adj")==0)
+        type_tree = 2;
+    else if(strcmp(tmp, "Adv")==0)
+        type_tree = 3;
+    else
+        type_tree = -1;
+    return type_tree;
 }

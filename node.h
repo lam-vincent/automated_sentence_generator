@@ -31,6 +31,7 @@ void add_node(NODE* previous, char letter, bool is_end_of_word);
 void add_flechies(NODE* node, char** sep_line);
 void create_word_node(NODE* node, char** sep_line, int cpt);
 
+NODE* rand_go_to_end_node(NODE* node);
 NODE* go_to_end(NODE* node, char** sep_line, int cpt);
 
 

@@ -28,31 +28,22 @@ TREE*** create_dico_trees()
 //adds a line from the dico to the dico_tree
 void create_tree_from_dico(TREE*** dico_tree, char**sep_line)
 {
-    char* type = get_type(sep_line);
-    int type_tree;
-    switch (type[2])
-    {
-    case 'r': //Ver
-        type_tree = 0;
-        break;
-    case 'm': //Nom
-        type_tree = 1;
-        break;
-    case 'j': //Adj
-        type_tree = 2;
-        break;
-    case 'v':  //Adv
-        type_tree = 3;
-        break;
-    default:
-        break;
-    }
+    int type_tree = get_type(sep_line);
+    if(type_tree == -1)
+        return;
     create_word_node(dico_tree[type_tree][(int)sep_line[1][0]-97]->root, sep_line, 0);
 }
 
-
-void display_tree(TREE tree)
+//Goes randomly to the end of a type of word
+NODE* rand_go_to_end(TREE** word_type)
 {
-    
-    return;
+    int random = rand()%26;
+    while(word_type[random]->root->next_current_size == 0)
+        random = rand()%26;
+    NODE* tmp = rand_go_to_end_node(word_type[random]->root);
+    while(tmp->flechies[0]->base[1] == '\0')
+        
+        tmp = rand_go_to_end_node(word_type[random]->root);
+
+    return tmp;
 }

@@ -5,141 +5,93 @@
 #include "stdlib.h"
 #include "stdbool.h"
 #include "string.h"
+#include "time.h"
+#include "program_functions.h"
 
 int main()
 {
-/*
-    TREE* verb;
-    verb->root = createNode('A', false);
-    add_node(verb->root, 'B', false);
-    add_node(verb->root->next[0], 'C', false);
-    add_node(verb->root, 'D', false);
-    printf("%c\n", verb->root->letter);
-    printf("%c\n", verb->root->next[0]->letter);
-    printf("%c\n", verb->root->next[0]->next[0]->letter);
-    printf("%c\n", verb->root->next[1]->letter);
-    char* string1 = "ABC"; char* string2 = "ADE";
-    NODE* node1 = end_of_word(verb->root, string1, 0);
-    NODE* node2 = end_of_word(verb->root, string2, 0);
-    printf("It works: %c and %c\n", node1->letter, node2->letter);
-*/
-
-    /*FILE* DICO = fopen("mini_dico.txt", "r");
-    char line[255];
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    remove_end_line(line);
-    char** sep_line = line_separator(line);
-    for (size_t i = 0; i < 3; i++)
-    {
-        printf("%s\n", sep_line[i]);
-    }
-
-    get_type(sep_line);
-
-    NODE* tmp = createNode('A', false, sep_line);
-    printf("%c", tmp->letter);
-    add_node(tmp, 'B', false, sep_line);
-    printf("%c", tmp->next[0]->letter);
-    add_node(tmp->next[0], 'C', true, sep_line);
-    printf("%c\n", tmp->next[0]->next[0]->letter);
-    NODE* node1 = tmp->next[0]->next[0]; 
-    printf("%s\n", node1->flechies[0]->forme);
-    printf("%s\n", node1->flechies[0]->base);
-    for(int i =0; i<node1->flechies[0]->nb_code;i++)
-    {
-        printf("%s\n", node1->flechies[0]->code[i]);
-    }
-    
-    TREE* verb;
-    verb->root = 
-    printf("%c\n", verb->root->next_current_size);
-    printf("%c\n", verb->root->next[0]->letter);
-   
-   
-    int cpt = strlen(sep_line[2])+1;
-    char* tmp = (char*)malloc(cpt* sizeof(char));
-    strcpy(tmp, sep_line[2]);
-
-    add_flechies(node1, sep_line);
-    printf("%s\n", node1->flechies[0]->forme);
-    printf("%s\n", node1->flechies[0]->base);
-    for(int i =0; i<node1->flechies[0]->nb_code;i++)
-    {
-        printf("%s\n", node1->flechies[0]->code[i]);
-    }*/
-
-    //printf("%s", tmp);
-
-    /*int ls = 0;
-    char** code = code_separator_collin(sep_line[2], &ls);
-    for (size_t i = 0; i < ls; i++)
-    {
-        printf("%s\n", code[i]);
-    } 
-    printf("forme fléchie ?: %d\n", is_flechie(sep_line)); */
+    srand(time(NULL));
     TREE*** dico_tree = create_dico_trees();
     TREE** Verb = dico_tree[0];
     TREE** Nom = dico_tree[1];
     TREE** Adj = dico_tree[2];
     TREE** Adv = dico_tree[3];
-    //printf("%c", Verb[(int)'o'-97]->root->letter);
-    //for(int i =0; i<26;i++){
-    //    printf("%c", Verb[i]->root->letter);
-    //}
-    FILE* DICO = fopen("mini_dico.txt", "r");
+    FILE* DICO = fopen("dictionnaire_non_accentue.txt", "r");
     char line[255];
-    /*fgets(line,255, DICO);
-    remove_end_line(line);
-    char** sep_line = line_separator(line);
-    for (size_t i = 0; i < 3; i++)
-    {
-        printf("%s\n", sep_line[i]);
-    }
-    NODE* tmp = create_tree_from_dico(Verb, sep_line);
-    printf("\t%s\t", tmp->flechies[0]->forme);
-
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    remove_end_line(line);
-    sep_line = line_separator(line);
-    tmp = create_tree_from_dico(Verb, sep_line);
-    printf("\t%s\t", tmp->flechies[0]->forme);*/
     int i =0;
-    while(i<10)
+
+    while(fgets(line,255, DICO) != NULL)
     {
-        fgets(line,255, DICO);
         remove_end_line(line);
         char** sep_line = line_separator(line);
         create_tree_from_dico(dico_tree, sep_line);
         i++;
     }
     fclose(DICO);
-    DICO = fopen("mini_dico.txt", "r");
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    fgets(line,255, DICO);
-    //fgets(line,255, DICO);
-    remove_end_line(line);
-    char** sep_line = line_separator(line);
-    /*for (size_t i = 0; i < 3; i++)
+    char* model_1[]= {"Nom", "Adj", "Ver", "Nom"};
+    char* model_2[]= {"Nom", "Ver", "Ver", "Nom", "Adj"};
+    char* model_3[]= {"Ver", "Adv", "Nom", "Ver", "Nom", "Adv"};
+    char*** models = (char***)malloc(3*sizeof(char**));
+    models[0]=model_1;
+    models[1]=model_2;
+    models[2]=model_3;
+    
+    bool run = true;
+    while(run)
     {
-        printf("%s\n", sep_line[i]);
-    }*/
-    NODE*tmp=go_to_end(Verb['s'-97]->root,sep_line,0);
-
-    for(i=0; i < tmp->current_flechies_size;i++)
-    {
-        printf("%s: ", tmp->flechies[i]->forme);
-        for (int j = 0; j < tmp->flechies[i]->nb_code; j++)
+        int choice;
+        printf("Welcome!\n\t1.Randomly generated sentences (bases)\n\t2.Randomly generated sentences (conjugated)\n\t3.Research from base\n\t4.Research from flechies\n\t\t0.Exit\n");
+        do
         {
-            printf("\t%s\t", tmp->flechies[i]->code[j]);
+            scanf("%d", &choice);
+        } while (choice<0 || choice > 4);
+        switch (choice)
+        {
+        case 0:
+        {
+            run = false;
+            printf("Bye!");
+            break;
         }
-        printf("\n");
+        case 1:
+        {
+            sentence_model(&choice);
+            char** model = models[choice-1];
+            int ls_model = 3+ choice;
+            for(int i =0; i<ls_model;i++)
+            {
+                if(i == 1 && choice == 2)
+                    printf("qui ");
+                else if (i == 3 && choice ==3)
+                    printf("c'est comme ");
+               NODE* word = rand_go_to_end(dico_tree[transfer_type(model[i])]);
+               printf("%s ", word->flechies[0]->base);
+            }
+            printf("\n\n");
+            sleep(1);
+            break;
+        }
+        case 2:
+        {
+            printf("Work in Progress.\n");
+            sleep(1);
+            break;
+        }
+        case 3:
+        {
+            printf("Work in Progress.\n");
+            sleep(1);
+            break;
+        }
+        case 4:
+        {
+            printf("Work in Progress.\n");
+            sleep(1);
+            break;
+        }
+        default:
+            break;
+        }
     }
     return 0;
 }

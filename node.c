@@ -90,17 +90,27 @@ void create_word_node(NODE* node, char** sep_line, int cpt)
 }
 
 //Goes to the end of a given base
-NODE* go_to_end(NODE* node, char** sep_line, int cpt)
+NODE* rand_go_to_end_node(NODE* node)
 {
-    char* base = sep_line[1];
-    if (base[cpt+1] == '\0')
+    int random;
+    
+    if (node->is_end)
         {
-            return node;
+            random = rand()%2;
+            if(node->next_current_size == 0 || random){
+                return node;}
+            else
+            {
+                random = rand()%node->next_current_size;
+                return rand_go_to_end_node(node->next[random]);
+            }
         }
-    int i = 0;
-    while(i < node->next_current_size && node->next[i]->letter != base[cpt+1])
-        i++;
-    go_to_end(node->next[i], sep_line, cpt+1);
+    else
+        {
+            
+            random = rand()%node->next_current_size;
+            return rand_go_to_end_node(node->next[random]);
+        }
 }
 
 //Adds all flechie forms to a node
@@ -115,3 +125,16 @@ void add_flechies(NODE* node, char** sep_line)
     return;
 }
 
+
+NODE* go_to_end(NODE* node, char** sep_line, int cpt)
+{
+    char* base = sep_line[1];
+    if (base[cpt+1] == '\0')
+        {
+            return node;
+        }
+    int i = 0;
+    while(i < node->next_current_size && node->next[i]->letter != base[cpt+1])
+        i++;
+    go_to_end(node->next[i], sep_line, cpt+1);
+}
