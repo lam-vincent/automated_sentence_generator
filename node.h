@@ -14,12 +14,10 @@ typedef struct s_node
 {
 	char letter;
 	struct s_node** next ; //array of pointer
-	int next_current_size ; //current size of the array
-		//(char** flechies ; //array of other forms
-		//char** code ; //array of the corresponding codes, "+" split character for each string)
-    bool is_end;
-	FF** flechies;
-    int current_flechies_size ;
+	int next_current_size ; //current size of this array
+    bool is_end; //Indicates that a node is at the end of a base
+	FF** flechies; //Array of every form that have the same base
+    int current_flechies_size ; //Current size of this array
 }NODE;
 
 
@@ -32,9 +30,7 @@ void add_flechies(NODE* node, char** sep_line);
 void create_word_node(NODE* node, char** sep_line, int cpt);
 
 
-bool is_leaf(NODE* node);
 NODE* rand_go_to_end_node(NODE* node);
-NODE* go_to_end(NODE* node, char** sep_line, int cpt);
 NODE* search_to_end(NODE* node, char* word, int cpt);
 NODE* search_to_end_flechies(NODE* node, char* word);
 

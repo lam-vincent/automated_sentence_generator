@@ -1,25 +1,23 @@
 #include "node.h"
 #include "tree.h"
 #include  "file_management.h"
+#include "program_functions.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"
 #include "string.h"
 #include "time.h"
-#include "program_functions.h"
 
 int main()
 {
     srand(time(NULL));
+
+    //Creation of tree from dictionnary
+    printf("Creating trees from file...\n\n");
     TREE*** dico_tree = create_dico_trees();
-    TREE** Verb = dico_tree[0];
-    TREE** Nom = dico_tree[1];
-    TREE** Adj = dico_tree[2];
-    TREE** Adv = dico_tree[3];
     FILE* DICO = fopen("dictionnaire_non_accentue.txt", "r");
     char line[255];
     int i =0;
-
     while(fgets(line,255, DICO) != NULL)
     {
         remove_end_line(line);
@@ -28,31 +26,31 @@ int main()
         i++;
     }
     fclose(DICO);
-    char* model_1[]= {"Nom", "Adj", "Ver", "Nom"};
-    char* model_2[]= {"Nom", "Ver", "Ver", "Nom", "Adj"};
-    char* model_3[]= {"Ver", "Adv", "Nom", "Ver", "Nom", "Adv"};
-    char*** models = (char***)malloc(3*sizeof(char**));
-    models[0]=model_1;
-    models[1]=model_2;
-    models[2]=model_3;
+    printf("Trees created!\n\n");
 
+    //Loading models for sentece
+    char*** models = load_models();
+
+    //Loop for program
     bool run = true;
     while(run)
     {
         int choice;
-        printf("Welcome!\n\t1.Randomly generated sentences (bases)\n\t2.Randomly generated sentences (conjugated)\n\t3.Research from base\n\t4.Research from flechies\n\t\t0.Exit\n");
+        printf("Welcome!\n\t1.Randomly generated sentences (bases)\n\t2.Randomly generated sentences (conjugated)\n\t3.Research from a base\n\t4.Research from a flechie\n\t\t0.Exit\n");
         do
         {
             scanf("%d", &choice);
         } while (choice<0 || choice > 4);
         switch (choice)
         {
+            //Exit program
             case 0:
             {
                 run = false;
-                printf("Bye!");
+                printf("\nBye!\n\n");
                 break;
             }
+            //Randomly generated sentences with bases
             case 1:
             {
                 sentence_model(&choice);
@@ -64,12 +62,13 @@ int main()
                         printf("qui ");
                     else if (i == 3 && choice ==3)
                         printf("c'est comme ");
-                NODE* word = rand_go_to_end(dico_tree[transfer_type(model[i])]);
-                printf("%s ", word->flechies[0]->base);
+                    NODE* word = rand_go_to_end(dico_tree[transfer_type(model[i])]);
+                    printf("%s ", word->flechies[0]->base);
                 }
                 printf("\n\n");
                 break;
             }
+            //Randomly generated conjugated sentences
             case 2:
             {
                 sentence_model(&choice);
@@ -85,71 +84,69 @@ int main()
                         printf("qui ");
                     else if (i == 3 && choice ==3)
                         printf("c'est comme ");
-                NODE* word = rand_go_to_end(dico_tree[transfer_type(model[i])]);
+                    NODE* word = rand_go_to_end(dico_tree[transfer_type(model[i])]);
+                    //Model 3
                     if(choice==3)
                     {
                        switch (transfer_type(model[i]))
                         {
+                        //Process nouns
                         case 1:
-                            {
-                                char* noun = random_noun(word, sep_code_1, sep_code_2, &sep_code_ls);
-                                
-                                if(strcmp("SG", sep_code_2)!=0)
-                                    printf("des %s ", noun);
-                                else if(strcmp("Fem", sep_code_1)==0)
-                                    printf("une %s ", noun);
-                                else
-                                    printf("un %s ", noun);
-
-                                break;
-                            }
-                        
+                        {
+                            char* noun = random_noun(word, sep_code_1, sep_code_2, &sep_code_ls); 
+                            if(strcmp("SG", sep_code_2)!=0)
+                                printf("des %s ", noun);
+                            else if(strcmp("Fem", sep_code_1)==0)
+                                printf("une %s ", noun);
+                            else
+                                printf("un %s ", noun);
+                            break;
+                        }
+                        //Process others
                         default:
-                            {
                                 printf("%s ", word->flechies[0]->base);
                                 break;
-                            }
+                        
                         }
                     }
+                    //Models 1 & 2
                     else
                     {
                         switch (transfer_type(model[i]))
                         {
+                        //Process nouns
                         case 1:
-                            {
-                                 char* noun = random_noun(word, sep_code_1, sep_code_2, &sep_code_ls);
-                                
-                                if(strcmp("SG", sep_code_2)!=0)
-                                    printf("des %s ", noun);
-                                else if(strcmp("Fem", sep_code_1)==0)
-                                    printf("une %s ", noun);
-                                else
-                                    printf("un %s ", noun);
-
-                                break;
-                            }
-                        
-                        case 2:
-                            {
-                                printf("%s ",accord_adj(word, sep_code_1, sep_code_2));
-                                break;
-                            }
-                        default:
                         {
-                            printf("%s ", accord_verb(word, sep_code_2));
+                            char* noun = random_noun(word, sep_code_1, sep_code_2, &sep_code_ls);
+                            if(strcmp("SG", sep_code_2)!=0)
+                                printf("des %s ", noun);
+                            else if(strcmp("Fem", sep_code_1)==0)
+                                printf("une %s ", noun);
+                            else
+                                printf("un %s ", noun);
                             break;
                         }
+                        //Process adjectives
+                        case 2:
+                            printf("%s ",accord_adj(word, sep_code_1, sep_code_2));
+                            break;
+                        //Process verbs
+                        default:
+                            printf("%s ", accord_verb(word, sep_code_2));
+                            break;
                         }
                     }
                 }
                 printf("\n\n");
                 break;
             }
+            //Reserch among bases
             case 3:
             {
                 search_from_base(dico_tree);
                 break;
             }
+            //Research among flechies
             case 4:
             {
                 search_from_flechies(dico_tree);

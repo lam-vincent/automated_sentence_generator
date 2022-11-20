@@ -125,26 +125,8 @@ void add_flechies(NODE* node, char** sep_line)
     return;
 }
 
-//NEVER USED
-bool is_leaf(NODE* node)
-{
-    return node->next_current_size == 0;
-}
-//NEVER USED
-NODE* go_to_end(NODE* node, char** sep_line, int cpt)
-{
-    char* base = sep_line[1];
-    if (base[cpt+1] == '\0')
-        {
-            return node;
-        }
-    int i = 0;
-    while(i < node->next_current_size && node->next[i]->letter != base[cpt+1])
-        i++;
-    go_to_end(node->next[i], sep_line, cpt+1);
-}
-
-
+//Follows a word until its end in a tree
+//Returns the location if it's found, NULL otherwise
 NODE* search_to_end(NODE* node, char* word, int cpt)
 {
     if (word[cpt+1] == '\0' && node->is_end)
@@ -161,6 +143,8 @@ NODE* search_to_end(NODE* node, char* word, int cpt)
     search_to_end(node->next[i], word, cpt+1);
 }
 
+//Looks at the end of every word for a flechie corresponding to word
+//Returns its location if it's found, NULL otherwise
 NODE* search_to_end_flechies(NODE* node, char* word)
 {
     if(node->is_end)

@@ -49,7 +49,7 @@ NODE* rand_go_to_end(TREE** word_type)
     return tmp;
 }
 
-//Checks wether the base can be found in a given type_tree
+//Checks whether the base can be found in a given type_tree
 //Returns NULL if it can't, a pointer to the last node of the word otherwise
 NODE*search_to_end_tree(char* word,TREE**type_tree)
 {
@@ -61,7 +61,7 @@ NODE*search_to_end_tree(char* word,TREE**type_tree)
     return found;
 }
 
-//checks where is a given word among all type_trees
+//Returns the location of a given base among all type_trees
 NODE** search_to_end_dico_tree(char* word, TREE*** dico_tree)
 {
     NODE** found = (NODE**)malloc(4*sizeof(NODE*));
@@ -72,6 +72,8 @@ NODE** search_to_end_dico_tree(char* word, TREE*** dico_tree)
     return found;
 }
 
+//Checks whether the flechie can be found in a given type_tree
+//Returns NULL if it can't, a pointer to the last node of the base that contains it otherwise
 NODE* search_to_end_flechies_tree(char* word,TREE** type_tree)
 {
     int i = 0;
@@ -84,6 +86,8 @@ NODE* search_to_end_flechies_tree(char* word,TREE** type_tree)
     return found;
 }
 
+
+//Returns the locations of a given flechie among all type_trees
 NODE** search_to_end_flechies_dico_tree(char* word, TREE*** dico_tree)
 {
     NODE** found = (NODE**)malloc(4*sizeof(NODE*));
