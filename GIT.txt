@@ -1,3 +1,0 @@
-Link to the git is below :
-
-https://github.com/mrccniv/automated_sentence_generator
