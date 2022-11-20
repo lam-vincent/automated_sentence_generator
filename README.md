@@ -4,7 +4,7 @@
 
 [Capture d’écran 2022-11-20 163734](https://user-images.githubusercontent.com/62343240/202911195-a1ea964c-cdbd-401f-9c3c-7ad4724b052f.png)
 
-<--- INTRODUCTION -->
+<-- INTRODUCTION -->
 
 ## About
 
