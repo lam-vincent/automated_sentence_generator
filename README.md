@@ -6,7 +6,7 @@
 
 <--- INTRODUCTION -->
 
-## About
+## Introduction
 
 In our algorithm course, we studied binary trees. In the continuity of our course and to apply the knowledge we have just learned, we have done the Automated Sentence Generator project in C.
 
