@@ -4,6 +4,7 @@
 #include "node.h"
 #include "file_management.h"
 
+
 //Creates an array of pointers to trees
 TREE** create_array_tree()
 {
@@ -46,4 +47,49 @@ NODE* rand_go_to_end(TREE** word_type)
         tmp = rand_go_to_end_node(word_type[random]->root);
 
     return tmp;
+}
+
+//Checks wether the base can be found in a given type_tree
+//Returns NULL if it can't, a pointer to the last node of the word otherwise
+NODE*search_to_end_tree(char* word,TREE**type_tree)
+{
+    int i = 0;
+    NODE* found;
+    
+        found = search_to_end(type_tree[(int)word[0]-97]->root, word,0);
+        
+    return found;
+}
+
+//checks where is a given word among all type_trees
+NODE** search_to_end_dico_tree(char* word, TREE*** dico_tree)
+{
+    NODE** found = (NODE**)malloc(4*sizeof(NODE*));
+    for(int i = 0; i<4;i++)
+    {
+        found[i] = search_to_end_tree(word,dico_tree[i]);
+    }
+    return found;
+}
+
+NODE* search_to_end_flechies_tree(char* word,TREE** type_tree)
+{
+    int i = 0;
+    NODE* found;
+    do
+    {
+        found = search_to_end_flechies(type_tree[i]->root, word);
+        i++;
+    } while (i<26 && found == NULL);
+    return found;
+}
+
+NODE** search_to_end_flechies_dico_tree(char* word, TREE*** dico_tree)
+{
+    NODE** found = (NODE**)malloc(4*sizeof(NODE*));
+    for(int i = 0; i<4;i++)
+    {
+        found[i] = search_to_end_flechies_tree(word,dico_tree[i]);
+    }
+    return found;
 }

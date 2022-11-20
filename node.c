@@ -125,7 +125,12 @@ void add_flechies(NODE* node, char** sep_line)
     return;
 }
 
-
+//NEVER USED
+bool is_leaf(NODE* node)
+{
+    return node->next_current_size == 0;
+}
+//NEVER USED
 NODE* go_to_end(NODE* node, char** sep_line, int cpt)
 {
     char* base = sep_line[1];
@@ -138,3 +143,58 @@ NODE* go_to_end(NODE* node, char** sep_line, int cpt)
         i++;
     go_to_end(node->next[i], sep_line, cpt+1);
 }
+
+
+NODE* search_to_end(NODE* node, char* word, int cpt)
+{
+    if (word[cpt+1] == '\0' && node->is_end)
+        {
+            return node;
+        }
+    int i = 0;
+    while(i < node->next_current_size && node->next[i]->letter != word[cpt+1])
+        i++;
+    if(i==node->next_current_size)
+    {
+        return NULL;
+    }
+    search_to_end(node->next[i], word, cpt+1);
+}
+
+NODE* search_to_end_flechies(NODE* node, char* word)
+{
+    if(node->is_end)
+    {
+        int i=0;
+        while(i<node->current_flechies_size && strcmp(word,node->flechies[i]->forme)!=0)
+            i++;
+        if(i==node->current_flechies_size)
+            {
+                NODE* found;
+                for (int i = 0; i < node->next_current_size; i++)
+                {
+                    found = search_to_end_flechies(node->next[i], word);
+                    if(found != NULL)
+                        return found;
+                }
+            }
+        else
+        {
+            return node;
+        }
+            
+    }
+    else
+    {
+        NODE* found;
+        for (int i = 0; i < node->next_current_size; i++)
+        {
+            found = search_to_end_flechies(node->next[i], word);
+            if(found != NULL)
+                return found;
+        }
+    
+    }
+    return NULL;
+
+}   

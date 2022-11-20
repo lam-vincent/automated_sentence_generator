@@ -100,3 +100,9 @@ int get_type(char** sep_line)
         type_tree = -1;
     return type_tree;
 }
+
+//NEXT THING TO DO
+void code_interpretation()
+{
+    return;
+}

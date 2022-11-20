@@ -1,7 +1,6 @@
 #ifndef UNTITLED_FILE_MANAGEMENT_H
 #define UNTITLED_FILE_MANAGEMENT_H
 
-//#define DICO_NAME "mini_dico.txt"
 
 
 void remove_end_line(char* line);
