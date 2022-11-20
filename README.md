@@ -21,7 +21,7 @@ First of all, we had to build our structure in order to facilitate the insertion
   ./Test.exe
   ```
 
-<p align="right">(<a href="#top">retourner en haut de la page</a>)</p>
+<p align="right">(<a href="#top">To go back to the top</a>)</p>
 
 
 
